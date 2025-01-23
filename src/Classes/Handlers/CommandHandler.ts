@@ -13,6 +13,7 @@ import {
 import assert from "node:assert/strict";
 import { Client } from "../Client/index.js";
 import { ChatInputCommand, ContextMenuCommand } from "../Commands/index.js";
+import consola from "consola";
 
 export class CommandHandler {
   // Parent client of the handler
@@ -170,6 +171,7 @@ export class CommandHandler {
       throw Error("Client cannot register commands before init");
 
     this.client.emit(Events.Debug, "Deploying commands...");
+
     const globalCommandData = this.chatCommands
       .filter((f) => f.isGlobal === true)
       .map((m) => m.toJSON())
@@ -183,6 +185,7 @@ export class CommandHandler {
           .filter((f) => f.isGlobal === true)
           .map((m) => m.toJSON())
       );
+
     const sentCommands = await this.client.application.commands.set(
       globalCommandData
     );
@@ -198,6 +201,7 @@ export class CommandHandler {
       )[]
     >();
     // Get guild chat commands
+
     this.chatCommands
       .filter((f) => f.isGlobal === false)
       .map((m) => {
@@ -205,12 +209,13 @@ export class CommandHandler {
         m.guildIds.forEach((guildId) => {
           if (guildCommandData.has(guildId)) {
             //@ts-ignore
-            guildCommandData.get(guildId).concat(json);
+            guildCommandData.get(guildId).push(json);
           } else {
             guildCommandData.set(guildId, [json]);
           }
         });
       });
+
     // Get guild context
     this._userContextMenus
       .filter((f) => f.isGlobal === false)
@@ -219,7 +224,7 @@ export class CommandHandler {
         m.guildIds.forEach((guildId) => {
           if (guildCommandData.has(guildId)) {
             //@ts-ignore
-            guildCommandData.get(guildId).concat(json);
+            guildCommandData.get(guildId).push(json);
           } else {
             guildCommandData.set(guildId, [json]);
           }
@@ -233,16 +238,22 @@ export class CommandHandler {
         m.guildIds.forEach((guildId) => {
           if (guildCommandData.has(guildId)) {
             //@ts-ignore
-            guildCommandData.get(guildId).concat(json);
+            guildCommandData.get(guildId).push(json);
           } else {
             guildCommandData.set(guildId, [json]);
           }
         });
       });
-    // Deploys commands buy guild
+
+    // Deploys commands by guild
     for (const [guildIds, json] of guildCommandData) {
       await this.client.application.commands.set(json, guildIds);
     }
+
+    this.client.emit(
+      Events.Debug,
+      `guildCommandData: ${JSON.stringify(guildCommandData, null, 2)}`
+    );
 
     this.client.emit(
       Events.Debug,

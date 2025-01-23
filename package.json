@@ -5,7 +5,8 @@
     "node": ">= 22.11 < 23"
   },
   "scripts": {
-    "dev": "tsx watch src/bot.ts",
+    "dev": "tsx watch src/bot.ts --no-deployment",
+    "dev:deploy": "tsx watch src/bot.ts",
     "prestart": "npm run build",
     "start": "node --env-file=.env ./dist/bot.js",
     "build": "tsc"

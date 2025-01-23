@@ -23,7 +23,7 @@ export default new ChatInputCommand({
   // guildIds: [process.env.GUILDID],
   execute: async (interaction) => {
     return interaction.reply({
-      content: ` reply 🏓`,
+      content: ` pong 🏓`,
       components: [getPingButton()],
       flags: MessageFlags.Ephemeral,
     });

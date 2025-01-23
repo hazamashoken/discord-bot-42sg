@@ -8,6 +8,6 @@ export default new Event({
     if (info.startsWith("[WS => ")) {
       return;
     }
-    consola.debug(info);
+    consola.log(info);
   },
 });

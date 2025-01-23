@@ -5,6 +5,7 @@ import * as commands from "./commands/index.js";
 import * as events from "./events/index.js";
 import { buttons, modals, selectMenus } from "./interactions/index.js";
 import "./intra.js";
+import consola from "consola";
 
 // Initialization (specify intents and partials)
 const client = new Client({
@@ -13,7 +14,7 @@ const client = new Client({
   receiveModals: true,
   receiveAutocomplete: true,
   replyOnError: true,
-  // replyMessageOnError: 'message on command error',
+  replyMessageOnError: "oopsie woopsie! uwu",
   splitCustomIDOn: "_",
   useDefaultInteractionEvent: true,
 });
