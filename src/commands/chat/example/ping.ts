@@ -24,7 +24,7 @@ export default new ChatInputCommand({
   execute: async (interaction) => {
     return interaction.reply({
       content: ` reply 🏓`,
-      components: [getPingButton(interaction.locale)],
+      components: [getPingButton()],
       flags: MessageFlags.Ephemeral,
     });
   },

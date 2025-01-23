@@ -9,8 +9,6 @@ import {
   TextInputStyle,
 } from "discord.js";
 import { ChatInputCommand } from "../../../Classes/index.js";
-// Locale Namespace
-const ns = "modal";
 
 // Example slash command
 

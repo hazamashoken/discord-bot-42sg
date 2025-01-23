@@ -8,7 +8,7 @@ export default new Interaction<ButtonInteraction>()
   .setRun(async (interaction) => {
     interaction.reply({
       content: `ping 🏓`,
-      components: [getPingButton(interaction.locale)],
+      components: [getPingButton()],
       flags: MessageFlags.Ephemeral,
     });
   });

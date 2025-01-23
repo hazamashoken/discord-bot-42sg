@@ -9,9 +9,6 @@ import {
 } from "discord.js";
 import { ChatInputCommand } from "../../../Classes/index.js";
 
-// Locale Namespace
-const ns = "select";
-
 /** TODO: add examples of more select menus */
 
 // Example slash command

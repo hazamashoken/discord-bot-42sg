@@ -6,9 +6,6 @@ import {
 } from "discord.js";
 import { ContextMenuCommand } from "../../../Classes/index.js";
 
-// Locale Namespace
-const ns = "count";
-
 // Example message context menu
 
 export default new ContextMenuCommand()

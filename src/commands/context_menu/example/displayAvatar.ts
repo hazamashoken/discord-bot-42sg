@@ -7,9 +7,6 @@ import {
 } from "discord.js";
 import { ContextMenuCommand, ExtraColor } from "../../../Classes/index.js";
 
-// Locale Namespace
-const ns = "avatar";
-
 // Example user context menu
 
 export default new ContextMenuCommand()
