@@ -53,6 +53,6 @@ export default new ChatInputCommand({
 
       return interaction.reply({ components: [row], ephemeral: true });
     default:
-      break;
+      return;
   }
 });

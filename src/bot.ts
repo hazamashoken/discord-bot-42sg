@@ -5,7 +5,6 @@ import * as commands from "./commands/index.js";
 import * as events from "./events/index.js";
 import { buttons, modals, selectMenus } from "./interactions/index.js";
 import "./intra.js";
-import consola from "consola";
 
 // Initialization (specify intents and partials)
 const client = new Client({
@@ -46,11 +45,11 @@ for (const selectMenu of Object.values(selectMenus)) {
 }
 
 // Bot logins to Discord services
-client.login(process.env.TOKEN).then(() => {
+client.login(process.env["TOKEN"]).then(() => {
   // Skip if no-deployment flag is set, else deploys command
   if (!process.argv.includes("--no-deployment")) {
     // removes guild command from set guild
-    client.commands.deregisterGuildCommands(process.env.GUILDID);
+    client.commands.deregisterGuildCommands(process.env["GUILDID"]);
     // deploys commands
     client.commands.register();
   }

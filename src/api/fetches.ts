@@ -1,22 +1,21 @@
-import Fast42 from "@codam/fast42";
 import { Event42, Exam42, ExamUser } from "./interfaces.js";
 import consola from "consola";
 
-const CAMPUS_ID = process.env.INTRA_CAMPUS_ID;
+const CAMPUS_ID = process.env["INTRA_CAMPUS_ID"];
 const FETCH_EVENTS_UPCOMING_DAYS = 21; // 3 weeks
-const EVENT_KINDS_FILTER = [
-  "rush",
-  "piscine",
-  "partnership", // pedago
-  "conference",
-  "meet_up",
-  "event", // event
-  "association", // association (student's club)
-  "hackathon",
-  "workshop",
-  "challenge", // speed working
-  "extern", // other
-];
+// const EVENT_KINDS_FILTER = [
+//   "rush",
+//   "piscine",
+//   "partnership", // pedago
+//   "conference",
+//   "meet_up",
+//   "event", // event
+//   "association", // association (student's club)
+//   "hackathon",
+//   "workshop",
+//   "challenge", // speed working
+//   "extern", // other
+// ];
 
 const fetchAll42 = async function (
   //@ts-ignore
@@ -56,13 +55,13 @@ const fetchAll42 = async function (
   });
 };
 
-const getEventDateRange = function (): string {
-  const currentDate = new Date();
-  const maxFetchDate = new Date(
-    currentDate.getTime() + 1000 * 60 * 60 * 24 * 365
-  ); // 1 year into the future
-  return `${currentDate.toISOString()},${maxFetchDate.toISOString()}`;
-};
+// const getEventDateRange = function (): string {
+//   const currentDate = new Date();
+//   const maxFetchDate = new Date(
+//     currentDate.getTime() + 1000 * 60 * 60 * 24 * 365
+//   ); // 1 year into the future
+//   return `${currentDate.toISOString()},${maxFetchDate.toISOString()}`;
+// };
 
 const filterExamOrEventOnDate = function (items: Exam42[] | Event42[]) {
   // Delete events that are over the limit specified in the global variable
@@ -123,12 +122,12 @@ export const fetchNextExamUser = async function (
       return null;
     }
 
-    const examID = futureExam[0].id;
+    const examID = futureExam[0]!.id;
 
     const examUsers = await fetchAll42(api, `/exams/${examID}/exams_users`);
 
     consola.log(`Fetched ${examUsers.length} exams`);
-    return { exam: futureExam[0], examUsers };
+    return { exam: futureExam[0]!, examUsers };
   } catch (err) {
     consola.log(err);
     return null;

@@ -15,7 +15,7 @@ export default new ChatInputCommand({
     .setDescription("Get next exams info")
     .setContexts(InteractionContextType.Guild)
     .setDefaultMemberPermissions(PermissionsBitField.Flags.SendMessages),
-  guildIds: [process.env.GUILDID!],
+  guildIds: [process.env["GUILDID"]!],
   execute: async (interaction) => {
     await interaction.deferReply();
 

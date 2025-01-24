@@ -7,7 +7,6 @@ import {
 import { ChatInputCommand } from "../../../Classes/index.js";
 import { api } from "../../../intra.js";
 import { fetchUserFutureExam } from "../../../api/fetches.js";
-import consola from "consola";
 
 export default new ChatInputCommand({
   builder: new SlashCommandBuilder()
@@ -18,7 +17,7 @@ export default new ChatInputCommand({
     .addStringOption((option) =>
       option.setName("login").setDescription("User login").setRequired(true)
     ),
-  guildIds: [process.env.GUILDID!],
+  guildIds: [process.env["GUILDID"]!],
   execute: async (interaction) => {
     await interaction.deferReply();
 

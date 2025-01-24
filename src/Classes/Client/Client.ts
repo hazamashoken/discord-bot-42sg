@@ -103,7 +103,7 @@ export class ExtendedClient extends Client<true> {
    * @param token The bot's Discord token
    * @returns string response
    */
-  public async login(token?: string) {
+  public override async login(token?: string) {
     if (!token) {
       throw new Error("[ERROR] Missing token");
     }

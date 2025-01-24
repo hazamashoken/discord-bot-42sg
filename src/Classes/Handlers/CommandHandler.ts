@@ -13,7 +13,6 @@ import {
 import assert from "node:assert/strict";
 import { Client } from "../Client/index.js";
 import { ChatInputCommand, ContextMenuCommand } from "../Commands/index.js";
-import consola from "consola";
 
 export class CommandHandler {
   // Parent client of the handler

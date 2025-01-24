@@ -4,7 +4,7 @@ import dns from "dns";
 import consola from "consola";
 
 export const EXAM_MODE_ENABLED =
-  process.env.EXAM_MODE_ENABLED === "true" || false;
+  process.env["EXAM_MODE_ENABLED"] === "true" || false;
 
 export const parseIpRanges = function (ipRanges: string): string[] {
   return ipRanges
@@ -18,7 +18,7 @@ export const ipToHostName = async function (
 ): Promise<string | null> {
   try {
     const result = await dns.promises.reverse(ip);
-    return result[0];
+    return result[0]!;
   } catch (err) {
     consola.error(err);
     return null;

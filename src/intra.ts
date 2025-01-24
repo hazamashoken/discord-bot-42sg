@@ -6,12 +6,12 @@ async function setUpIntraAPI() {
   let api: Fast42 | undefined = undefined;
 
   try {
-    consola.log(`Using Intra API UID: ${process.env.INTRA_API_UID}`);
+    consola.log(`Using Intra API UID: ${process.env["INTRA_API_UID"]}`);
     //@ts-ignore
     api = await new Fast42([
       {
-        client_id: process.env.INTRA_API_UID!,
-        client_secret: process.env.INTRA_API_SECRET!,
+        client_id: process.env["INTRA_API_UID"]!,
+        client_secret: process.env["INTRA_API_SECRET"]!,
       },
     ]).init();
   } catch (err) {
