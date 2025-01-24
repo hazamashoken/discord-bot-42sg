@@ -9,6 +9,8 @@ import { api } from "../../../intra.js";
 import { fetchNextExamUser } from "../../../api/fetches.js";
 import consola from "consola";
 
+const CMD_CHANNELID = process.env["CMD_CHANNELID"];
+
 export default new ChatInputCommand({
   builder: new SlashCommandBuilder()
     .setName("exam-next")
@@ -17,6 +19,13 @@ export default new ChatInputCommand({
     .setDefaultMemberPermissions(PermissionsBitField.Flags.SendMessages),
   guildIds: [process.env["GUILDID"]!],
   execute: async (interaction) => {
+    if (interaction.channelId !== CMD_CHANNELID) {
+      await interaction.reply({
+        content: `This command is not available here.`,
+        ephemeral: true,
+      });
+      return;
+    }
     await interaction.deferReply();
 
     const examUser = await fetchNextExamUser(api!);
@@ -37,7 +46,9 @@ export default new ChatInputCommand({
 
     const embedExam = new EmbedBuilder()
       .setTitle(
-        `Exam: ${examUser.exam.begin_at.toDateString()} ${examUser.exam.begin_at.toLocaleTimeString()}`
+        `${
+          examUser.exam.name
+        }: ${examUser.exam.begin_at.toDateString()} ${examUser.exam.begin_at.toLocaleTimeString()}`
       )
       .setDescription(`${userMsg}`);
     await interaction.editReply({

@@ -148,10 +148,66 @@ export const fetchUserFutureExam = async function (
       }
     );
 
-    consola.log(`Fetched ${userExams.length} exams`);
+    consola.debug(`Fetched ${userExams.length} exams`);
     return userExams;
   } catch (err) {
-    consola.log(err);
+    consola.error(err);
     return null;
   }
 };
+
+export const fetchExamUserNow = async function (
+  //@ts-ignore
+  api: Fast42
+): Promise<{ examUsers: ExamUser[]; exam: Exam42 } | null> {
+  try {
+    const ONE_HOUR = 1 * 60 * 60 * 1000;
+
+    const examsNows = await fetchAll42(api, `/campus/${CAMPUS_ID}/exams`, {
+      "range[begin_at]": `2025-01-24T09:08:28.247Z,2025-01-31T10:08:28.247Z`,
+      // "range[begin_at]": `${new Date(
+      //   new Date().getTime() - ONE_HOUR
+      // ).toISOString()},${new Date().toISOString()}`,
+      // "filter[future]": "false",
+    });
+
+    consola.debug(`Fetched ${examsNows.length} exams`);
+
+    if (examsNows.length === 0) {
+      return null;
+    }
+
+    const examUsers = await fetchAll42(
+      api,
+      `/exams/${examsNows[0].id}/exams_users`
+    );
+
+    consola.debug(`Fetched ${examUsers.length} users`);
+
+    return { examUsers, exam: examsNows[0] };
+  } catch (err) {
+    consola.error(err);
+    return null;
+  }
+};
+
+export async function isUserRegisteredForCurrentExam(
+  //@ts-ignore
+  api: Fast42,
+  login: string
+): Promise<{ status: boolean; exam: Exam42 } | null> {
+  try {
+    const res = await fetchExamUserNow(api);
+
+    if (!res) {
+      return null;
+    }
+
+    const user = res.examUsers.find((user) => user.user.login === login);
+
+    return { status: user ? true : false, exam: res.exam };
+  } catch (err) {
+    consola.error(err);
+    return null;
+  }
+}
