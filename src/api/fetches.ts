@@ -164,11 +164,11 @@ export const fetchExamUserNow = async function (
     const ONE_HOUR = 1 * 60 * 60 * 1000;
 
     const examsNows = await fetchAll42(api, `/campus/${CAMPUS_ID}/exams`, {
-      "range[begin_at]": `2025-01-24T09:08:28.247Z,2025-01-31T10:08:28.247Z`,
-      // "range[begin_at]": `${new Date(
-      //   new Date().getTime() - ONE_HOUR
-      // ).toISOString()},${new Date().toISOString()}`,
-      // "filter[future]": "false",
+      // "range[begin_at]": `2025-01-24T09:08:28.247Z,2025-01-31T10:08:28.247Z`,
+      "range[begin_at]": `${new Date(
+        new Date().getTime() - ONE_HOUR
+      ).toISOString()},${new Date().toISOString()}`,
+      "filter[future]": "false",
     });
 
     consola.debug(`Fetched ${examsNows.length} exams`);
