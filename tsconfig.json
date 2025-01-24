@@ -1,31 +1,31 @@
 {
-    "compilerOptions": {
-        "module": "NodeNext",
-        "esModuleInterop": true,
-        "target": "esnext",
-        "noImplicitAny": true,
-        "moduleResolution": "NodeNext",
-        "sourceMap": true,
-        "outDir": "dist",
-        "skipLibCheck": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        // "noEmit": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "incremental": true,
-        // "allowJs": false,
-        "baseUrl": "srcs",
-        "paths": {
-            "#root/*": [
-                "./*"
-            ],
-        },
+  "compilerOptions": {
+    "module": "NodeNext",
+    "esModuleInterop": true,
+    "target": "esnext",
+    "noImplicitAny": true,
+    "moduleResolution": "NodeNext",
+    "sourceMap": true,
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    // "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    // "allowJs": false,
+    "baseUrl": "src",
+    "paths": {
+      "#root/*": [
+        "./*"
+      ],
     },
-    "include": [
-        "**/*.ts"
-    ],
-    "exclude": [
-        "node_modules"
-    ],
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
 }

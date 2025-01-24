@@ -24,7 +24,7 @@ export default new ChatInputCommand({
 
     const login = interaction.options.getString("login", true);
 
-    const exams = await fetchUserFutureExam(api, login);
+    const exams = await fetchUserFutureExam(api!, login);
 
     if (!exams) {
       await interaction.editReply({

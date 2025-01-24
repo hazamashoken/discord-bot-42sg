@@ -18,7 +18,8 @@ export default new ChatInputCommand({
   guildIds: [process.env.GUILDID!],
   execute: async (interaction) => {
     await interaction.deferReply();
-    const examUser = await fetchNextExamUser(api);
+
+    const examUser = await fetchNextExamUser(api!);
 
     consola.log(examUser ? examUser.examUsers : "No exams found");
 

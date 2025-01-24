@@ -1,19 +1,20 @@
 {
+  "name": "42sg-discord-bot",
+  "version": "1.0.0",
   "main": "dist/bot.js",
   "type": "module",
   "engines": {
     "node": ">= 22.11 < 23"
   },
   "scripts": {
+    "build": "tsc",
     "dev": "tsx watch src/bot.ts --no-deployment",
     "dev:deploy": "tsx watch src/bot.ts",
     "prestart": "npm run build",
-    "start": "node --env-file=.env ./dist/bot.js",
-    "build": "tsc"
+    "start": "node --env-file=.env ./dist/bot.js"
   },
   "dependencies": {
     "@codam/fast42": "^2.1.6",
-    "@fluent/bundle": "^0.18.0",
     "consola": "^3.4.0",
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",

@@ -252,11 +252,6 @@ export class CommandHandler {
 
     this.client.emit(
       Events.Debug,
-      `guildCommandData: ${JSON.stringify(guildCommandData, null, 2)}`
-    );
-
-    this.client.emit(
-      Events.Debug,
       `Deployed commands to ${guildCommandData.size} guilds`
     );
     this.client.emit(Events.Debug, "Commands registered");
