@@ -161,7 +161,7 @@ export const fetchExamUserNow = async function (
   api: Fast42
 ): Promise<{ examUsers: ExamUser[]; exam: Exam42 } | null> {
   try {
-    const ONE_HOUR = 1 * 60 * 60 * 1000;
+    const ONE_HOUR = 2 * 60 * 60 * 1000;
 
     const examsNows = await fetchAll42(api, `/campus/${CAMPUS_ID}/exams`, {
       // "range[begin_at]": `2025-01-24T09:08:28.247Z,2025-01-31T10:08:28.247Z`,
