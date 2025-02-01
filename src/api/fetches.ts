@@ -1,5 +1,5 @@
+import { logger } from "../logger.js";
 import { Event42, Exam42, ExamUser } from "./interfaces.js";
-import consola from "consola";
 
 const CAMPUS_ID = process.env["INTRA_CAMPUS_ID"];
 const FETCH_EVENTS_UPCOMING_DAYS = 21; // 3 weeks
@@ -26,7 +26,7 @@ const fetchAll42 = async function (
   return new Promise(async (resolve, reject) => {
     try {
       const pages = await api.getAllPages(path, params);
-      consola.log(
+      logger.debug(
         `Retrieving API items: ${pages.length} pages for path ${path}`
       );
 
@@ -35,7 +35,7 @@ const fetchAll42 = async function (
       const pageItems = await Promise.all(
         //@ts-ignore
         pages.map(async (page) => {
-          consola.log(`Fetching page ${++i}/${pages.length}`);
+          logger.debug(`Fetching page ${++i}/${pages.length}`);
           const p = await page;
           if (p.status == 429) {
             throw new Error("Intra API rate limit exceeded");
@@ -96,17 +96,17 @@ export const fetchFutureExams = async function (
     const filteredExams = filterExamOrEventOnDate(exams42) as Exam42[];
 
     if (filteredExams.length == 0) {
-      consola.log("No exams found");
+      logger.debug("No exams found");
       return [];
     }
 
     filteredExams.sort((a, b) => {
       return a.begin_at.getTime() - b.begin_at.getTime();
     });
-    consola.log(`Fetched ${filteredExams.length} exams`);
+    logger.debug(`Fetched ${filteredExams.length} exams`);
     return filteredExams;
   } catch (err) {
-    consola.log(err);
+    logger.error(err);
     return [];
   }
 };
@@ -126,10 +126,10 @@ export const fetchNextExamUser = async function (
 
     const examUsers = await fetchAll42(api, `/exams/${examID}/exams_users`);
 
-    consola.log(`Fetched ${examUsers.length} exams`);
+    logger.debug(`Fetched ${examUsers.length} exams`);
     return { exam: futureExam[0]!, examUsers };
   } catch (err) {
-    consola.log(err);
+    logger.error(err);
     return null;
   }
 };
@@ -148,10 +148,10 @@ export const fetchUserFutureExam = async function (
       }
     );
 
-    consola.debug(`Fetched ${userExams.length} exams`);
+    logger.debug(`Fetched ${userExams.length} exams`);
     return userExams;
   } catch (err) {
-    consola.error(err);
+    logger.error(err);
     return null;
   }
 };
@@ -171,7 +171,7 @@ export const fetchExamUserNow = async function (
       "filter[future]": "false",
     });
 
-    consola.debug(`Fetched ${examsNows.length} exams`);
+    logger.debug(`Fetched ${examsNows.length} exams`);
 
     if (examsNows.length === 0) {
       return null;
@@ -182,11 +182,11 @@ export const fetchExamUserNow = async function (
       `/exams/${examsNows[0].id}/exams_users`
     );
 
-    consola.debug(`Fetched ${examUsers.length} users`);
+    logger.debug(`Fetched ${examUsers.length} users`);
 
     return { examUsers, exam: examsNows[0] };
   } catch (err) {
-    consola.error(err);
+    logger.error(err);
     return null;
   }
 };
@@ -203,11 +203,13 @@ export async function isUserRegisteredForCurrentExam(
       return null;
     }
 
+    logger.debug(`Checking if user ${login} is registered for current exam`);
+
     const user = res.examUsers.find((user) => user.user.login === login);
 
     return { status: user ? true : false, exam: res.exam };
   } catch (err) {
-    consola.error(err);
+    logger.error(err);
     return null;
   }
 }

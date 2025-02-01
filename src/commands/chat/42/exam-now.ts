@@ -8,8 +8,11 @@ import {
 import { ChatInputCommand } from "../../../Classes/index.js";
 import { api } from "../../../intra.js";
 import { isUserRegisteredForCurrentExam } from "../../../api/fetches.js";
+import { logger as defaultLogger } from "../../../logger.js";
 
 const CMD_CHANNELID = process.env["CMD_CHANNELID"];
+
+const logger = defaultLogger.child({command: "exam-next"});
 
 export default new ChatInputCommand({
   builder: new SlashCommandBuilder()
@@ -22,6 +25,10 @@ export default new ChatInputCommand({
     ),
   guildIds: [process.env["GUILDID"]!],
   execute: async (interaction) => {
+
+    // @ts-ignore it have name ok ?
+    logger.info({ user: { username: interaction.user.username, tag: interaction.user.tag}, channel: interaction.channel.name });
+
     if (interaction.channelId !== CMD_CHANNELID) {
       await interaction.reply({
         content: `This command is not available here.`,

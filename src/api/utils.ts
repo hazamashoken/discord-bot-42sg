@@ -1,7 +1,7 @@
 import fs from "fs";
-import { Exam42 } from "./interfaces.js";
 import dns from "dns";
-import consola from "consola";
+import { logger } from "../logger.js";
+import { Exam42 } from "./interfaces.js";
 
 export const EXAM_MODE_ENABLED =
   process.env["EXAM_MODE_ENABLED"] === "true" || false;
@@ -20,7 +20,7 @@ export const ipToHostName = async function (
     const result = await dns.promises.reverse(ip);
     return result[0]!;
   } catch (err) {
-    consola.error(err);
+    logger.error(err);
     return null;
   }
 };
@@ -32,7 +32,7 @@ export const hostNameToIp = async function (
     const result = await dns.promises.lookup(hostName);
     return result.address;
   } catch (err) {
-    consola.error(err);
+    logger.error(err);
     return null;
   }
 };
@@ -46,12 +46,12 @@ export const getMessageForHostName = async function (
   hostName: string
 ): Promise<string> {
   if (hostName === "unknown") {
-    consola.warn("Hostname is unknown, unable to find messages for host");
+    logger.warn("Hostname is unknown, unable to find messages for host");
     return "";
   }
   const hostIp = await hostNameToIp(hostName);
   if (!hostIp) {
-    consola.warn(
+    logger.warn(
       `Could not parse IP address from hostname "${hostName}", unable to find messages for host`
     );
     return "";
@@ -62,7 +62,7 @@ export const getMessageForHostName = async function (
     // TODO: implement caching for messages
     const messagesJson = JSON.parse(fs.readFileSync("messages.json", "utf8"));
     if (!messagesJson) {
-      consola.warn(
+      logger.warn(
         "Could not parse messages.json, unable to find messages for host"
       );
       return "";
@@ -77,7 +77,7 @@ export const getMessageForHostName = async function (
     // Combine all messages into one
     return hostMessages.join("\n\n");
   } catch (error) {
-    consola.error(error);
+    logger.error(error);
     return "";
   }
 };

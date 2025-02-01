@@ -15,10 +15,11 @@
   },
   "dependencies": {
     "@codam/fast42": "^2.1.6",
-    "consola": "^3.4.0",
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "winston": "^3.17.0",
+    "winston-console-format": "^1.0.8"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.12",

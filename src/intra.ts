@@ -1,12 +1,12 @@
 import Fast42 from "@codam/fast42";
-import consola from "consola";
+import { logger } from "./logger.js";
 
 async function setUpIntraAPI() {
   //@ts-ignore
   let api: Fast42 | undefined = undefined;
 
   try {
-    consola.log(`Using Intra API UID: ${process.env["INTRA_API_UID"]}`);
+    logger.info(`Using Intra API UID: ${process.env["INTRA_API_UID"]}`);
     //@ts-ignore
     api = await new Fast42([
       {
@@ -15,10 +15,10 @@ async function setUpIntraAPI() {
       },
     ]).init();
   } catch (err) {
-    consola.warn(
+    logger.warn(
       "Could not initialize Intra API, some features might not work"
     );
-    consola.error(err);
+    logger.error(err);
     api = undefined; // unset api
   }
   return api;

@@ -5,9 +5,6 @@ import * as commands from "./commands/index.js";
 import * as events from "./events/index.js";
 import { buttons, modals, selectMenus } from "./interactions/index.js";
 import "./intra.js";
-// import consola from "consola";
-
-// consola.level = 10; // Debug
 
 // Initialization (specify intents and partials)
 const client = new Client({

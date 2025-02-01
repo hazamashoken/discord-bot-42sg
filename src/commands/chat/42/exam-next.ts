@@ -4,12 +4,14 @@ import {
   PermissionsBitField,
   SlashCommandBuilder,
 } from "discord.js";
+import { logger as defaultLogger } from "../../../logger.js";
 import { ChatInputCommand } from "../../../Classes/index.js";
 import { api } from "../../../intra.js";
 import { fetchNextExamUser } from "../../../api/fetches.js";
-import consola from "consola";
 
 const CMD_CHANNELID = process.env["CMD_CHANNELID"];
+
+const logger = defaultLogger.child({command: "exam-next"});
 
 export default new ChatInputCommand({
   builder: new SlashCommandBuilder()
@@ -19,6 +21,10 @@ export default new ChatInputCommand({
     .setDefaultMemberPermissions(PermissionsBitField.Flags.SendMessages),
   guildIds: [process.env["GUILDID"]!],
   execute: async (interaction) => {
+    
+    //@ts-ignore it have name ok ?
+    logger.info({ user: { username: interaction.user.username, tag: interaction.user.tag}, channel: interaction.channel.name });
+    
     if (interaction.channelId !== CMD_CHANNELID) {
       await interaction.reply({
         content: `This command is not available here.`,
@@ -30,7 +36,7 @@ export default new ChatInputCommand({
 
     const examUser = await fetchNextExamUser(api!);
 
-    consola.log(examUser ? examUser.examUsers : "No exams found");
+    logger.debug(examUser ? examUser.examUsers : "No exams found");
 
     if (!examUser) {
       await interaction.editReply({
@@ -51,6 +57,7 @@ export default new ChatInputCommand({
         }: ${examUser.exam.begin_at.toDateString()} ${examUser.exam.begin_at.toLocaleTimeString()}`
       )
       .setDescription(`${userMsg}`);
+
     await interaction.editReply({
       embeds: [embedExam],
     });

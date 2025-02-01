@@ -1,8 +1,10 @@
 import { Events } from "discord.js";
 import { Event } from "../../Classes/index.js";
-import consola from "consola";
+import { logger } from "../../logger.js";
 
 export default new Event({
   name: Events.Warn,
-  execute: async (info: string) => consola.warn(info),
+  execute: async (info: string) => {
+    logger.warn(info)
+  },
 });
