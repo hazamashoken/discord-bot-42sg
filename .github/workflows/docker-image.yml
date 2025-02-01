@@ -11,8 +11,7 @@ on:
       - master
     tags:
       - v*
-  pull_request:
-  # This creates an environment variable called `IMAGE_NAME ` with the value `ghtoken_product_demo`.
+
 env:
   IMAGE_NAME: discord-bot-42sg
 #
