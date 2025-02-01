@@ -4,6 +4,8 @@ RUN apt update && apt install -y
 COPY . /app
 WORKDIR /app
 
+RUN chown -R node:node /app
+
 
 FROM base AS prod-deps
 RUN npm ci --omit-dev
