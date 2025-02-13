@@ -50,6 +50,8 @@ export default new ChatInputCommand({
         ? examUser.examUsers.map((user) => user.user.login + "\n")
         : "No users subscribed";
 
+    logger.info(userMsg);
+
     const embedExam = new EmbedBuilder()
       .setTitle(
         `${

@@ -12,7 +12,7 @@ import { logger as defaultLogger } from "../../../logger.js";
 
 const CMD_CHANNELID = process.env["CMD_CHANNELID"];
 
-const logger = defaultLogger.child({command: "exam-next"});
+const logger = defaultLogger.child({command: "exam"});
 
 export default new ChatInputCommand({
   builder: new SlashCommandBuilder()
