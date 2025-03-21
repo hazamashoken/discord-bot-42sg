@@ -47,7 +47,7 @@ export default new ChatInputCommand({
 
     const userMsg =
       examUser.examUsers.length > 0
-        ? examUser.examUsers.map((user) => user.user.login).join("\n")
+        ? examUser.examUsers.map((user) => user.user.login).sort((a, b) => a.localeCompare(b) ).join("\n")
         : "No users subscribed";
 
     // logger.info(userMsg);
