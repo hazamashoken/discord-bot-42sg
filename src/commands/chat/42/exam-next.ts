@@ -47,16 +47,16 @@ export default new ChatInputCommand({
 
     const userMsg =
       examUser.examUsers.length > 0
-        ? examUser.examUsers.map((user) => user.user.login + "\n")
+        ? examUser.examUsers.map((user) => user.user.login).join("\n")
         : "No users subscribed";
 
-    logger.info(userMsg);
+    // logger.info(userMsg);
 
     const embedExam = new EmbedBuilder()
       .setTitle(
         `${
           examUser.exam.name
-        }: ${examUser.exam.begin_at.toDateString()} ${examUser.exam.begin_at.toLocaleTimeString()}`
+        }: ${examUser.exam.begin_at.toDateString()} ${examUser.exam.begin_at.toLocaleTimeString()}: ${examUser.examUsers.length} users`
       )
       .setDescription(`${userMsg}`);
 
