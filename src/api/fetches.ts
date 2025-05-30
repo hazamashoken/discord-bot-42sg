@@ -213,3 +213,49 @@ export async function isUserRegisteredForCurrentExam(
     return null;
   }
 }
+
+
+export async function payUserAlt(
+  // @ts-ignore
+  api: Fast42,
+  login: string, 
+  amount: number, 
+  reason: string)
+{
+
+  if (!api) {
+    throw new Error("API not initialized");
+  }
+
+  const users = await fetchAll42(api, `/users/${login.toLowerCase()}`);
+
+  const userID = users.length > 0 ? users[0].id : null;
+
+  if (!userID) {
+    throw new Error(`User ${login} not found`);
+  }
+  
+  const payload = {
+          "transaction": {
+              "value": amount,
+              "user_id": userID,
+              "transactable_type": "event",
+              "reason": reason
+            }
+      }
+  
+  try {
+    const res = await api.post(`/transactions`, 
+      payload
+    );
+
+    if (!res.ok) {
+      throw new Error(`Failed to pay user ${login}: ${res.statusText}`);
+    }
+
+    return await res.json();
+  } catch (err) {
+    logger.error(`Error paying user ${login}: ${err}`);
+    throw err;
+  }
+}
