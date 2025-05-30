@@ -15,3 +15,9 @@ export { default as examsUser } from "./chat/42/exam-user.js";
 export { default as examsNext } from "./chat/42/exam-next.js";
 
 export { default as examsNow } from "./chat/42/exam-now.js";
+
+// export { default as code }  from "./chat/42/code.js";
+
+// export { default as verify } from "./chat/42/link.js";
+
+export { default as payAlt } from "./chat/42/pay-alt.js";
