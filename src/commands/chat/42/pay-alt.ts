@@ -75,7 +75,7 @@ export default new ChatInputCommand({
     }
 
     await interaction.editReply({
-      content: `You have successfully pay ${login} : ${amount}`,
+      content: `<@${member.id}> have successfully pay ${login} : ${amount}`,
     })
   },
 });
